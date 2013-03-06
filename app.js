@@ -317,3 +317,54 @@ app.get('/login',function(req,res){
       res.write( JSON.stringify({text: "my name is " + req.params.username}) );
       res.end('\n');
 });
+
+app.get('/dashboard', function (req, res) {
+
+    //calls /dashtweets and /messages
+    //displays the text from those two functions
+
+});
+
+app.get('/tweets', function (req, res) {
+
+    //makes a call to the database to get the most recent tweets from username 
+    //inputs: req.params.username 
+    //returns tweets as JSON strings
+
+
+});
+
+app.get('/dashtweets', function (req, res) {
+
+    //makes two calls to the database, the first to get the followers list, the second gets the mos recent tweets of those users
+    //inputs: req.params.username
+    //returns tweets as one json string
+
+});
+
+app.get('/messages', function (req, res) {
+
+    //makes a call to the database getting all messages sent to the user
+    //inputs: req.params.username
+    //returns a json string
+
+});
+
+app.get('/search', function (req, res) {
+
+    //makes a call to the database, checks the first character of the input, differentiating between # and @ symbols. 
+    //If a # make a request the the database searching for that # tag
+    //If it is an @ symbol, search the user names 
+    //inputs: req.params.query
+    //returns the results as a json string
+
+});
+
+app.get('/profile', function (req, res) {
+
+    //calls the /tweets function, inputing the user name
+    //inputs: req.params.query
+
+
+});
+
