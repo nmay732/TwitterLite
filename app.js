@@ -304,18 +304,30 @@ http.createServer(app).listen(app.get('port'), function(){
   var users=[
       {username:'bob',password:'b'},
       {username:'alice',password:'a'},
-      {username:'jace',password:'j'},
+      {username:'jack',password:'j'},
       {username:'mick',password:'m'} 
       ]
+
+    // we can call addfollowers function to add more followers
+    // add by Billy
+    var followers=[
+    {username:'bob',follower:'alice'},
+    {username:'bob',follower:'jack'},
+    {username:'bob',follower:'mick'},
+    ]
 
 // we may add more tweet by enter text in broser 
 // we need this function
   var Tweet=[
-      {user:'bob',tweet:"How are you ?"},
+      {username:'bob',  tweet:"How are you ?"},
       {username:'alice',tweet:"What are you doing ?"},
-      {username:'jace',tweet:"Are you going to party tonight?"},
-      {username:'Mick',tweet:"Are you going tonight?"}
+      {username:'jack', tweet:"Are you going to party tonight?"},
+      {username:'mick', tweet:"Are you going tonight?"}
   ]
+
+
+
+
 
    var loginUser=null;
 
@@ -327,10 +339,10 @@ app.get('/',function(req,res){
 //=======
 //Login function
 //edit by Billy
-app.get('/login',function(req,res){
-var content ;
-    content += '<h3>Please Login </h3>';
-    content += '<form method="get" action="/loginform">' +
+app.get('/login',function(req,res){ 
+    var content;
+     content += '<h3>Please Login </h3>';
+     content += '<form method="get" action="/loginform">' +
         'Username: <input type="text" name="username"/><br/>' +
         'Password: <input type="text" name="password"/><br/>' +
         '<input type="submit" value="Login"/>'
@@ -384,42 +396,36 @@ app.get('/UpdateMessage', function (req, res) {
 });
 
 
-app.get('/dashboard', function (req, res) {
-
-    //calls /dashtweets and /messages
-    //displays the text from those two functions
-
-});
 
 app.get('/gettweets', function (req, res) {
 
     //makes a call to the database to get the most recent tweets from username 
     //inputs: req.params.username 
     //returns tweets as JSON strings
-    var message='Here is the Tweets User psot  <br/>   ';
+    var message='Here are the Tweets User psot  <br/>   ';
     //name=req.query.username;
-    name='bob'
-    for(var i=Tweet.length-1;i>0;i--) 
-    if(Tweet[i].username=name)
+    for(var i=Tweet.length-1;i>=0;i--) 
+    if(Tweet[i].username===loginUser)
       message+=Tweet[i].tweet+' <br/>  ';
     res.send(message);
 });
 
-app.get('/dashtweets', function (req, res) {
+// app.get('/dashtweets', function (req, res) {
 
-    //makes two calls to the database, the first to get the followers list, the second gets the mos recent tweets of those users
-    //inputs: req.params.username
-    //returns tweets as one json 
+//     //makes two calls to the database, the first to get the followers list, the second gets the mos recent tweets of those users
+//     //inputs: req.params.username
+//     //returns tweets as one json 
+//     user=req.query.name;
 
-});
+// });
 
-app.get('/messages', function (req, res) {
+// app.get('/messages', function (req, res) {
 
-    //makes a call to the database getting all messages sent to the user
-    //inputs: req.params.username
-    //returns a json string
+//     //makes a call to the database getting all messages sent to the user
+//     //inputs: req.params.username
+//     //returns a json string
 
-});
+// });
 
 app.get('/search', function (req, res) {
 
@@ -433,15 +439,54 @@ app.get('/dashboard', function (req, res) {
 
     //calls /dashtweets and /messages
     //displays the text from those two functions
+    var content='<h1> Welcome to User Dashboard </h1> </br>';
+    var followerlist=[{username:null,follower:null}];
+    var usertweets=[{username:null,tweet:null}];
+    var followerstweets=[{username:null,tweet:null}];
+   
+   // get followerlist
+    for(var i=0;i<followers.length;i++)
+      if(followers[i].username==loginUser)
+        followerlist.push(followers[i]);
+
+    // for User Tweet History
+      for(var i=0;i<Tweet.length;i++)
+      if(Tweet[i].username==loginUser)
+        usertweets.push(Tweet[i]);
+
+     // for followerstweet History
+      for(var i=0;i<followerlist.length;i++)
+        for(var j=0;j<Tweet.length;j++)
+           if(followerlist[i].follower===Tweet[j].username)
+               followerstweets.push(Tweet[j]);
+
+ 
+      content+='<h2> User Tweet History </h2> </br>';
+       for(var i=0;i<usertweets.length;i++)
+        if(usertweets[i].username!=null)
+        content+=usertweets[i].tweet+'</br>';
+
+      content+='<h2> Followers List </h2> </br>';
+        for(var i=0;i<followerlist.length;i++)
+          if(followerlist[i].username!=null)
+            content+=followerlist[i].follower+'</br>';
+
+      content+='<h2> Followers Tweets History</h2> </br>';
+        for(var i=0;i<followerstweets.length;i++)
+          if(followerstweets[i].username!=null)
+            content+=followerstweets[i].tweet+'</br>';
+        res.send(content); 
 
 });
+
+
 
 app.get('/tweets', function (req, res) {
 
     //makes a call to the database to get the most recent tweets from username 
     //inputs: req.params.username 
     //returns tweets as JSON strings
-
+ res.send('Not yet implement');
 
 });
 
@@ -450,7 +495,7 @@ app.get('/dashtweets', function (req, res) {
     //makes two calls to the database, the first to get the followers list, the second gets the mos recent tweets of those users
     //inputs: req.params.username
     //returns tweets as one json string
-
+ res.send('Not yet implement');
 });
 
 app.get('/messages', function (req, res) {
@@ -458,7 +503,7 @@ app.get('/messages', function (req, res) {
     //makes a call to the database getting all messages sent to the user
     //inputs: req.params.username
     //returns a json string
-
+ res.send('Not yet implement');
 });
 
 app.get('/search', function (req, res) {
@@ -469,14 +514,17 @@ app.get('/search', function (req, res) {
     //If it is an @ symbol, search the user names 
     //inputs: req.params.query
     //returns the results as a json string
-
+ res.send('Not yet implement');
 });
 
 app.get('/profile', function (req, res) {
 
     //calls the /tweets function, inputing the user name
     //inputs: req.params.query
+     res.send('Not yet implement');
+});
 
-
+app.get('/setfollower', function (req, res) {
+     res.send('Not yet implement');
 });
 
