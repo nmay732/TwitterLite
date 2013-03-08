@@ -298,6 +298,9 @@ http.createServer(app).listen(app.get('port'), function(){
 
 //<<<<<<< HEAD
 
+
+
+
 //   I add this variable for public acess, not just Login function
 //   may add more information inside as we intergrade it
 //   adit by Billy
@@ -346,7 +349,7 @@ app.get('/login',function(req,res){
      if(loginCount!=0)
      content += '<h3>Invalid username or password ,Please login again</h3>';
      else
-    content += '<h3>Please Login </h3></br>';
+    content += '<h1>Please Login </h1></br>';
      content += '<form method="get" action="/loginform">' +
         'Username: <input type="text" name="username"/><br/>' +
         'Password: <input type="text" name="password"/><br/>' +
@@ -447,12 +450,13 @@ app.get('/dashboard', function (req, res) {
 
     //calls /dashtweets and /messages
     //displays the text from those two functions
-    var content='<h1> Welcome to User Dashboard </h1> </br>';
+    var content='<h1> Welcome to User Dashboard </h1>';
+    content+='User :'+loginUser+'</br>';
     var followerlist=[{username:null,follower:null}];
     var followinglist=[{username:null,follower:null}];
     var usertweets=[{username:null,tweet:null}];
     var followerstweets=[{username:null,tweet:null}];
-
+    var followingstweets=[{username:null,tweet:null}];
    
    // get followerlist
     for(var i=0;i<followers.length;i++)
@@ -470,12 +474,18 @@ app.get('/dashboard', function (req, res) {
            if(followerlist[i].follower===Tweet[j].username)
                followerstweets.push(Tweet[j]);
 
+    
+
       //get the followingList
       for(var i=0;i<followers.length;i++)
       if(followers[i].follower==loginUser)
         followinglist.push(followers[i]);
 
-
+      // for following list
+     for(var i=0;i<followinglist.length;i++)
+        for(var j=0;j<Tweet.length;j++)
+           if(followinglist[i].username===Tweet[j].username)
+               followingstweets.push(Tweet[j]);
  
       content+='<h2> User Tweet History </h2> </br>';
        for(var i=0;i<usertweets.length;i++)
@@ -490,12 +500,18 @@ app.get('/dashboard', function (req, res) {
       content+='<h2> Followers Tweets History</h2> </br>';
         for(var i=0;i<followerstweets.length;i++)
           if(followerstweets[i].username!=null)
-            content+=followerstweets[i].tweet+'</br>';
+            content+=followerstweets[i].username+'    :    '+followerstweets[i].tweet+'</br>';
 
        content+='<h2> Following List </h2> </br>';
         for(var i=0;i<followinglist.length;i++)
           if(followinglist[i].username!=null)
             content+=followinglist[i].username+'</br>'; 
+
+       content+='<h2> Followings Tweets History</h2> </br>';
+        for(var i=1;i<followingstweets.length;i++)
+            content+=followingstweets[i].username+'  :     '+followingstweets[i].tweet+' </br>';
+             
+
             content+='</br>'
             content+='</br>'
             content+='</br>'
