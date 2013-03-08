@@ -299,26 +299,22 @@ http.createServer(app).listen(app.get('port'), function(){
 //   may add more information inside as we intergrade it
 //   adit by Billy
   var users=[
-      {username:'bob',password:'b'}
-      {username:'alice',password:'a'}
-      {username:'jace',password:'j'}
+      {username:'bob',password:'b'},
+      {username:'alice',password:'a'},
+      {username:'jace',password:'j'},
       {username:'mick',password:'m'} 
-      ];
+      ]
 
 // we may add more tweet by enter text in broser 
 // we need this function
   var Tweet=[
-      {user:bob,"How are you ?"}
-      {username:alice,"What are you doing ?"}
-      {username:jace,"Are you going to party tonight?"}
-      {username:Mick,"Are you going tonight?"}
+      {user:'bob',tweet:"How are you ?"},
+      {username:'alice',tweet:"What are you doing ?"},
+      {username:'jace',tweet:"Are you going to party tonight?"},
+      {username:'Mick',tweet:"Are you going tonight?"}
   ]
 
-
-
-  ]
-
-  }
+  
 
 //Login function
 app.get('/login',function(req,res){
@@ -355,6 +351,10 @@ app.get('/TweetMessage', function (req, res) {
         '</TweetMessage>';
     res.send(content);
 });
+
+
+
+
 
 
 app.get('/dashboard', function (req, res) {
