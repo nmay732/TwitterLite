@@ -296,6 +296,7 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
+<<<<<<< HEAD
 
 //   I add this variable for public acess, not just Login function
 //   may add more information inside as we intergrade it
@@ -323,8 +324,28 @@ http.createServer(app).listen(app.get('port'), function(){
 app.get('/',function(req,res){
        res.redirect('/login');
 });
+=======
+//Login function
+app.get('/login',function(req,res){
+  var user=['bob','alice','jake'];
+  var pwd=['b','a','j'];
+  var nm=['bob','alice','jake'];
+  var p=['b','a','j'];  
+ // var nm= req.params.username;
+  //var p= req.params.pwd;
 
+  console.log(nm);
+  console.log(p);
+  
+  for(var i=0;i<user.length; i++){
+    if(nm[i]==user[i]&&p[i]==pwd[i])
+      console.log("Login successful!");
+  }
+>>>>>>> 2e465266b4f942c2f256fff387245cae8d6d42b6
 
+  console.log("Login reached!");
+
+<<<<<<< HEAD
 //Login function
 app.get('/login',function(req,res){
   var user=['bob','alice','jake'];
@@ -416,6 +437,47 @@ app.get('/messages', function (req, res) {
 
 app.get('/search', function (req, res) {
 
+=======
+  res.writeHead(200, {'content-type': 'text/json' });
+      res.write( JSON.stringify({text: "my name is " + req.params.username}) );
+      res.end('\n');
+});
+
+app.get('/dashboard', function (req, res) {
+
+    //calls /dashtweets and /messages
+    //displays the text from those two functions
+
+});
+
+app.get('/tweets', function (req, res) {
+
+    //makes a call to the database to get the most recent tweets from username 
+    //inputs: req.params.username 
+    //returns tweets as JSON strings
+
+
+});
+
+app.get('/dashtweets', function (req, res) {
+
+    //makes two calls to the database, the first to get the followers list, the second gets the mos recent tweets of those users
+    //inputs: req.params.username
+    //returns tweets as one json string
+
+});
+
+app.get('/messages', function (req, res) {
+
+    //makes a call to the database getting all messages sent to the user
+    //inputs: req.params.username
+    //returns a json string
+
+});
+
+app.get('/search', function (req, res) {
+
+>>>>>>> 2e465266b4f942c2f256fff387245cae8d6d42b6
     //makes a call to the database, checks the first character of the input, differentiating between # and @ symbols. 
     //If a # make a request the the database searching for that # tag
     //If it is an @ symbol, search the user names 
