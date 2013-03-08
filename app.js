@@ -339,9 +339,14 @@ app.get('/',function(req,res){
 //=======
 //Login function
 //edit by Billy
+var loginCount=0;
 app.get('/login',function(req,res){ 
     var content;
-     content += '<h3>Please Login </h3>';
+     
+     if(loginCount!=0)
+     content += '<h3>Invalid username or password ,Please login again</h3>';
+     else
+    content += '<h3>Please Login </h3></br>';
      content += '<form method="get" action="/loginform">' +
         'Username: <input type="text" name="username"/><br/>' +
         'Password: <input type="text" name="password"/><br/>' +
@@ -361,6 +366,7 @@ app.get('/login',function(req,res){
               console.log("Login Success");
               res.redirect('/dashboard');
             }
+              loginCount++;
               res.redirect('/login');
     });
 
@@ -435,14 +441,18 @@ app.get('/search', function (req, res) {
       res.end('\n');
 });
 
+
+ // edit by Billy
 app.get('/dashboard', function (req, res) {
 
     //calls /dashtweets and /messages
     //displays the text from those two functions
     var content='<h1> Welcome to User Dashboard </h1> </br>';
     var followerlist=[{username:null,follower:null}];
+    var followinglist=[{username:null,follower:null}];
     var usertweets=[{username:null,tweet:null}];
     var followerstweets=[{username:null,tweet:null}];
+
    
    // get followerlist
     for(var i=0;i<followers.length;i++)
@@ -460,6 +470,12 @@ app.get('/dashboard', function (req, res) {
            if(followerlist[i].follower===Tweet[j].username)
                followerstweets.push(Tweet[j]);
 
+      //get the followingList
+      for(var i=0;i<followers.length;i++)
+      if(followers[i].follower==loginUser)
+        followinglist.push(followers[i]);
+
+
  
       content+='<h2> User Tweet History </h2> </br>';
        for(var i=0;i<usertweets.length;i++)
@@ -475,6 +491,19 @@ app.get('/dashboard', function (req, res) {
         for(var i=0;i<followerstweets.length;i++)
           if(followerstweets[i].username!=null)
             content+=followerstweets[i].tweet+'</br>';
+
+       content+='<h2> Following List </h2> </br>';
+        for(var i=0;i<followinglist.length;i++)
+          if(followinglist[i].username!=null)
+            content+=followinglist[i].username+'</br>'; 
+            content+='</br>'
+            content+='</br>'
+            content+='</br>'
+
+      content += '<form method="get" action="/follow">' +
+        'Follow: <input type="text" name="followingusername"/><br/>' +
+        '<input type="submit" value="Follow"/>'
+        '</follow>';
         res.send(content); 
 
 });
@@ -524,7 +553,10 @@ app.get('/profile', function (req, res) {
      res.send('Not yet implement');
 });
 
-app.get('/setfollower', function (req, res) {
-     res.send('Not yet implement');
+app.get('/follow', function (req, res) {
+        var username=req.query.followingusername;
+          if(loginUser!=username) 
+         followers.push({username:username,follower:loginUser});
+         res.redirect('/dashboard');    
 });
 
