@@ -7,7 +7,9 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , fs = require('fs');
+
 
 var app = express();
 
@@ -314,7 +316,14 @@ http.createServer(app).listen(app.get('port'), function(){
       {username:'Mick',tweet:"Are you going tonight?"}
   ]
 
+   var loginUser=null;
+
   
+// add by Billy
+app.get('/',function(req,res){
+       res.redirect('/login');
+});
+
 
 //Login function
 app.get('/login',function(req,res){
@@ -331,6 +340,8 @@ app.get('/login',function(req,res){
   for(var i=0;i<user.length; i++){
     if(nm[i]==user[i]&&p[i]==pwd[i])
       console.log("Login successful!");
+    // I add loginUser  (Billy)
+        loginUser=user;
   }
 
   console.log("Login reached!");
@@ -340,21 +351,35 @@ app.get('/login',function(req,res){
       res.end('\n');
    });
 
+
+//logout fuction
+app.get('/logout',function(req,res){
+   loginUser=null;
+   res.redirect('/login');
+});
+
 // we need a way to add tweet
 // add by Billy
 app.get('/TweetMessage', function (req, res) {
-    var content = tolist();
-    content += '<h3>Tweet A Message!</h3>';
-    content += '<form method="get" action="/TweetMessage">' +
+    var content =loginUser;
+   content += '<h3>Tweet A Message!</h3>';
+    content += '<form method="get" action="/UpdateMessage">' +
         'Message: <input type="text" name="Message"/><br/>' +
         '<input type="submit" value="Tweet"/>'
         '</TweetMessage>';
     res.send(content);
 });
 
-
-
-
+// update the tweet 
+// add by Billy
+app.get('/UpdateMessage', function (req, res) {
+  var message=req.query.Message;
+  var c ={'user':loginUser,tweet:message};
+     Tweet.push(c);
+     for(var i=0;i<Tweet.length;i++)
+      console.log(Tweet[i].tweet);
+     res.redirect('/TweetMessage');
+});
 
 
 app.get('/dashboard', function (req, res) {
@@ -364,12 +389,12 @@ app.get('/dashboard', function (req, res) {
 
 });
 
-app.get('/tweets', function (req, res) {
+app.get('/gettweets', function (req, res) {
 
     //makes a call to the database to get the most recent tweets from username 
     //inputs: req.params.username 
     //returns tweets as JSON strings
-
+    
 
 });
 
@@ -377,7 +402,7 @@ app.get('/dashtweets', function (req, res) {
 
     //makes two calls to the database, the first to get the followers list, the second gets the mos recent tweets of those users
     //inputs: req.params.username
-    //returns tweets as one json string
+    //returns tweets as one json 
 
 });
 
