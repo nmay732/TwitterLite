@@ -296,7 +296,7 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
 //   I add this variable for public acess, not just Login function
 //   may add more information inside as we intergrade it
@@ -324,60 +324,40 @@ http.createServer(app).listen(app.get('port'), function(){
 app.get('/',function(req,res){
        res.redirect('/login');
 });
-=======
+//=======
 //Login function
+//edit by Billy
 app.get('/login',function(req,res){
-  var user=['bob','alice','jake'];
-  var pwd=['b','a','j'];
-  var nm=['bob','alice','jake'];
-  var p=['b','a','j'];  
- // var nm= req.params.username;
-  //var p= req.params.pwd;
+var content ;
+    content += '<h3>Please Login </h3>';
+    content += '<form method="get" action="/loginform">' +
+        'Username: <input type="text" name="username"/><br/>' +
+        'Password: <input type="text" name="password"/><br/>' +
+        '<input type="submit" value="Login"/>'
+        '</login>';
+    res.send(content);
+  });
 
-  console.log(nm);
-  console.log(p);
-  
-  for(var i=0;i<user.length; i++){
-    if(nm[i]==user[i]&&p[i]==pwd[i])
-      console.log("Login successful!");
-  }
->>>>>>> 2e465266b4f942c2f256fff387245cae8d6d42b6
-
-  console.log("Login reached!");
-
-<<<<<<< HEAD
-//Login function
-app.get('/login',function(req,res){
-  var user=['bob','alice','jake'];
-  var pwd=['b','a','j'];
-  var nm=['bob','alice','jake'];
-  var p=['b','a','j'];  
- // var nm= req.params.username;
-  //var p= req.params.pwd;
-
-  console.log(nm);
-  console.log(p);
-  
-  for(var i=0;i<user.length; i++){
-    if(nm[i]==user[i]&&p[i]==pwd[i])
-      console.log("Login successful!");
-    // I add loginUser  (Billy)
-        loginUser=user;
-  }
-
-  console.log("Login reached!");
-
-  res.writeHead(200, {'content-type': 'text/json' });
-      res.write( JSON.stringify({text: "my name is " + req.params.username}) );
-      res.end('\n');
-   });
-
+    app.get('/loginform',function(req,res){
+        var user=req.query.username;
+        var password=req.query.password;
+        for (var i=0;i<users.length;i++)
+          if(users[i].username===user)
+            if(users[i].password===password)
+            {
+              loginUser=user;
+              console.log("Login Success");
+              res.redirect('/dashboard');
+            }
+              res.redirect('/login');
+    });
 
 //logout fuction
 app.get('/logout',function(req,res){
    loginUser=null;
    res.redirect('/login');
 });
+
 
 // we need a way to add tweet
 // add by Billy
@@ -390,6 +370,7 @@ app.get('/TweetMessage', function (req, res) {
         '</TweetMessage>';
     res.send(content);
 });
+
 
 // update the tweet 
 // add by Billy
@@ -415,8 +396,13 @@ app.get('/gettweets', function (req, res) {
     //makes a call to the database to get the most recent tweets from username 
     //inputs: req.params.username 
     //returns tweets as JSON strings
-    
-
+    var message='Here is the Tweets User psot  <br/>   ';
+    //name=req.query.username;
+    name='bob'
+    for(var i=Tweet.length-1;i>0;i--) 
+    if(Tweet[i].username=name)
+      message+=Tweet[i].tweet+' <br/>  ';
+    res.send(message);
 });
 
 app.get('/dashtweets', function (req, res) {
@@ -437,7 +423,7 @@ app.get('/messages', function (req, res) {
 
 app.get('/search', function (req, res) {
 
-=======
+//=======
   res.writeHead(200, {'content-type': 'text/json' });
       res.write( JSON.stringify({text: "my name is " + req.params.username}) );
       res.end('\n');
@@ -477,7 +463,7 @@ app.get('/messages', function (req, res) {
 
 app.get('/search', function (req, res) {
 
->>>>>>> 2e465266b4f942c2f256fff387245cae8d6d42b6
+//>>>>>>> 2e465266b4f942c2f256fff387245cae8d6d42b6
     //makes a call to the database, checks the first character of the input, differentiating between # and @ symbols. 
     //If a # make a request the the database searching for that # tag
     //If it is an @ symbol, search the user names 
