@@ -5,7 +5,12 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
+  , login = require('./routes/login')
+  , verify = require('./routes/loginverify')
+  , dashboard=require('./routes/dashboard')
+  , dahsboardhandler=require('./routes/dashboardhandler')
+  , TweetMessage = require('./routes/TweetMessage')
+  , logout = require('./routes/logout')
   , http = require('http')
   , path = require('path')
   , fs = require('fs');
@@ -328,8 +333,13 @@ http.createServer(app).listen(app.get('port'), function(){
       {username:'mick', tweet:"Are you going tonight?"}
   ]
 
-
-
+  // we can add information to user profile
+  var info=[
+         {username:'bob',password:'b',hometown:'China',birthday:'12/12/1987'},
+          {username:'alice',password:'a',hometown:'U S',birthday:'10/10/1991'},
+           {username:'jack',password:'j',hometown:'China',birthday:'12/12/1978'},
+            {username:'mick',password:'m',hometown:'England',birthday:'01/01/1990'}
+  ]
 
 
    var loginUser=null;
@@ -343,66 +353,42 @@ app.get('/',function(req,res){
 //Login function
 //edit by Billy
 var loginCount=0;
-app.get('/login',function(req,res){ 
-    var content;
-     
-     if(loginCount!=0)
-     content += '<h3>Invalid username or password ,Please login again</h3>';
-     else
-    content += '<h1>Please Login </h1></br>';
-     content += '<form method="get" action="/loginform">' +
-        'Username: <input type="text" name="username"/><br/>' +
-        'Password: <input type="text" name="password"/><br/>' +
-        '<input type="submit" value="Login"/>'
-        '</login>';
-    res.send(content);
-  });
-
-    app.get('/loginform',function(req,res){
-        var user=req.query.username;
-        var password=req.query.password;
-        for (var i=0;i<users.length;i++)
-          if(users[i].username===user)
-            if(users[i].password===password)
-            {
-              loginUser=user;
-              console.log("Login Success");
-              res.redirect('/dashboard');
-            }
-              loginCount++;
-              res.redirect('/login');
-    });
-
+ //app.get('/login',function(req,res)
+  app.get ('/login' , login.login);
+  app.get ('/loginverify' , verify.loginverify);
+  app.get ('/logout' , logout.logout);
+  app.get ('/dashboard' , dashboard.dashboard);
+  app.get ('/dahsboardhandler' , dahsboardhandler.dahsboardhandler);
+  app.get ('/tweetMessage' , TweetMessage.TweetMessage);
 //logout fuction
-app.get('/logout',function(req,res){
-   loginUser=null;
-   res.redirect('/login');
-});
+// app.get('/logout',function(req,res){
+//    loginUser=null;
+//    res.redirect('/login');
+// });
 
 
 // we need a way to add tweet
 // add by Billy
 app.get('/TweetMessage', function (req, res) {
-    var content =loginUser;
-   content += '<h3>Tweet A Message!</h3>';
-    content += '<form method="get" action="/UpdateMessage">' +
-        'Message: <input type="text" name="Message"/><br/>' +
-        '<input type="submit" value="Tweet"/>'
-        '</TweetMessage>';
-    res.send(content);
+   var message=req.query.Message;
+  var c ={username:loginUser,tweet:message};
+     Tweet.push(c);
+     for(var i=0;i<Tweet.length;i++)
+      console.log(Tweet[i].tweet);
+     res.redirect('/dashboard');
 });
 
 
 // update the tweet 
 // add by Billy
-app.get('/UpdateMessage', function (req, res) {
-  var message=req.query.Message;
-  var c ={'user':loginUser,tweet:message};
-     Tweet.push(c);
-     for(var i=0;i<Tweet.length;i++)
-      console.log(Tweet[i].tweet);
-     res.redirect('/TweetMessage');
-});
+// app.get('/UpdateMessage', function (req, res) {
+//   var message=req.query.Message;
+//   var c ={'user':loginUser,tweet:message};
+//      Tweet.push(c);
+//      for(var i=0;i<Tweet.length;i++)
+//       console.log(Tweet[i].tweet);
+//      res.redirect('/TweetMessage');
+// });
 
 
 
@@ -446,85 +432,149 @@ app.get('/search', function (req, res) {
 
 
  // edit by Billy
-app.get('/dashboard', function (req, res) {
+// app.get('/dashboard', function (req, res) {
 
-    //calls /dashtweets and /messages
-    //displays the text from those two functions
-    var content='<h1> Welcome to User Dashboard </h1>';
-    content+='User :'+loginUser+'</br>';
-    var followerlist=[{username:null,follower:null}];
-    var followinglist=[{username:null,follower:null}];
-    var usertweets=[{username:null,tweet:null}];
-    var followerstweets=[{username:null,tweet:null}];
-    var followingstweets=[{username:null,tweet:null}];
+//     //calls /dashtweets and /messages
+//     //displays the text from those two functions
+//     var content='<h1> Welcome to User Dashboard </h1>';
+//     content+='User :'+loginUser+'</br>';
+//     var followerlist=[{username:null,follower:null}];
+//     var followinglist=[{username:null,follower:null}];
+//     var usertweets=[{username:null,tweet:null}];
+//     var followerstweets=[{username:null,tweet:null}];
+//     var followingstweets=[{username:null,tweet:null}];
    
-   // get followerlist
-    for(var i=0;i<followers.length;i++)
-      if(followers[i].username==loginUser)
-        followerlist.push(followers[i]);
+//    // get followerlist
+//     for(var i=0;i<followers.length;i++)
+//        if(followers[i]!=null)
+//       if(followers[i].username==loginUser)
+//         followerlist.push(followers[i]);
 
-    // for User Tweet History
-      for(var i=0;i<Tweet.length;i++)
-      if(Tweet[i].username==loginUser)
-        usertweets.push(Tweet[i]);
+//     // for User Tweet History
+//       for(var i=0;i<Tweet.length;i++)
+//       if(Tweet[i].username==loginUser)
+//         usertweets.push(Tweet[i]);
 
-     // for followerstweet History
-      for(var i=0;i<followerlist.length;i++)
-        for(var j=0;j<Tweet.length;j++)
-           if(followerlist[i].follower===Tweet[j].username)
-               followerstweets.push(Tweet[j]);
+//      // for followerstweet History
+//       for(var i=0;i<followerlist.length;i++)
+//         for(var j=0;j<Tweet.length;j++)
+//            if(followerlist[i].follower===Tweet[j].username)
+//                followerstweets.push(Tweet[j]);
 
     
 
-      //get the followingList
-      for(var i=0;i<followers.length;i++)
-      if(followers[i].follower==loginUser)
-        followinglist.push(followers[i]);
+//       //get the followingList
+//       for(var i=0;i<followers.length;i++)
+//         if(followers[i]!=null)
+//       if(followers[i].follower==loginUser)
+//         followinglist.push(followers[i]);
 
-      // for following list
-     for(var i=0;i<followinglist.length;i++)
-        for(var j=0;j<Tweet.length;j++)
-           if(followinglist[i].username===Tweet[j].username)
-               followingstweets.push(Tweet[j]);
+//       // for following list
+//      for(var i=0;i<followinglist.length;i++)
+//         for(var j=0;j<Tweet.length;j++)
+//            if(followinglist[i].username===Tweet[j].username)
+//                followingstweets.push(Tweet[j]);
+
+
+
  
-      content+='<h2> User Tweet History </h2> </br>';
-       for(var i=0;i<usertweets.length;i++)
-        if(usertweets[i].username!=null)
-        content+=usertweets[i].tweet+'</br>';
+//       content+='<h2> User Tweet History </h2> </br>';
+//        for(var i=0;i<usertweets.length;i++)
+//         if(usertweets[i].username!=null)
+//         content+=usertweets[i].tweet+'</br>';
 
-      content+='<h2> Followers List </h2> </br>';
-        for(var i=0;i<followerlist.length;i++)
-          if(followerlist[i].username!=null)
-            content+=followerlist[i].follower+'</br>';
+//       content+='<h2> Followers List </h2> </br>';
+//         for(var i=0;i<followerlist.length;i++)
+//           if(followerlist[i].username!=null)
+//             content+=followerlist[i].follower+'</br>';
 
-      content+='<h2> Followers Tweets History</h2> </br>';
-        for(var i=0;i<followerstweets.length;i++)
-          if(followerstweets[i].username!=null)
-            content+=followerstweets[i].username+'    :    '+followerstweets[i].tweet+'</br>';
+//       content+='<h2> Followers Tweets History</h2> </br>';
+//         for(var i=0;i<followerstweets.length;i++)
+//           if(followerstweets[i].username!=null)
+//             content+=followerstweets[i].username+'    :    '+followerstweets[i].tweet+'</br>';
 
-       content+='<h2> Following List </h2> </br>';
-        for(var i=0;i<followinglist.length;i++)
-          if(followinglist[i].username!=null)
-            content+=followinglist[i].username+'</br>'; 
+//        content+='<h2> Following List </h2> </br>';
+//         for(var i=0;i<followinglist.length;i++)
+//           if(followinglist[i].username!=null)
+//             content+=followinglist[i].username+'</br>'; 
 
-       content+='<h2> Followings Tweets History</h2> </br>';
-        for(var i=1;i<followingstweets.length;i++)
-            content+=followingstweets[i].username+'  :     '+followingstweets[i].tweet+' </br>';
+//        content+='<h2> Followings Tweets History</h2> </br>';
+//         for(var i=1;i<followingstweets.length;i++)
+//             content+=followingstweets[i].username+'  :     '+followingstweets[i].tweet+' </br>';
              
 
-            content+='</br>'
-            content+='</br>'
-            content+='</br>'
-
-      content += '<form method="get" action="/follow">' +
-        'Follow: <input type="text" name="followingusername"/><br/>' +
-        '<input type="submit" value="Follow"/>'
-        '</follow>';
-        res.send(content); 
-
-});
+//             content+='</br>';
+//             content+='</br>';
+//             content+='</br>';
+//        content+=' Please make a decision of what you want to do </br>';
+//        content+=' 1 for Tweet a message </br>';
+//        content+=' 2 for follow a friend </br>';
+//        content+=' 3 for unfollow a friend </br>';
+//        content+=' 4 for go into user profile </br>';
+//        content+=' 5 for logout </br>';
 
 
+//        content += '<form method="get" action="/dashboardhandler">' +
+//         'Decision: <input type="text" name="decision"/><br/>' +
+//         '<input type="submit" value="Enter"/>'
+//         '</dashboardhandler></br>';
+//         res.send(content); 
+// }); 
+
+//  handle the choice make by user
+// add by Billy
+// app.get('/dashboardhandler', function (req, res) {
+//     var content='';
+//    var choice=req.query.decision;
+//     if(choice ==1)
+//     {
+//        content+='<h1> Please enter a Message you want to tweet </h1> </br>';
+//        content += '<form method="get" action="/TweetMessage">' +
+//         'Tweet: <input type="text" name="Message"/><br/>' +
+//         '<input type="submit" value="Send"/>'
+//         '</TweetMessage></br>';
+//             res.send(content);
+//     }
+//    else if(choice==2){
+//     content+='<h1> Please enter a friend name that you want to follow</h1> </br>';
+//   content += '<form method="get" action="/follow">' +
+//         'Follow: <input type="text" name="followingusername"/><br/>' +
+//         '<input type="submit" value="Follow"/>'
+//         '</follow></br>';
+//             res.send(content); }
+
+//       else if (choice==3){
+//         content+='<h1> Please enter a friend name that you want to unfollow</h1> </br>';
+//        content += '<form method="get" action="/unfollow">' +
+//         'Unollow: <input type="text" name="unfollowingusername"/><br/>' +
+//         '<input type="submit" value="Unfollow"/>'
+//         '</unfollow></br>';
+//             res.send(content); 
+//       }
+
+//       else if(choice==4){
+//       res.redirect('/profile') ;}
+//       else if (choice==5){
+//         loginCount=0;
+//         res.redirect('/logout'); 
+//       }
+
+//       else
+//         res.redirect('/dashboard');   
+// });
+
+// // add by Billy
+// app.get('/unfollow', function (req, res) {
+//         var user=req.query.unfollowingusername;
+//           if(loginUser!=user) 
+//             for(var i=0;i<followers.length;i++){
+//               if(followers[i].username===user)
+//                if(followers[i].follower===loginUser)
+//                delete followers[i];
+//                console.log(followers[i]);
+//               }
+//          res.redirect('/dashboard');    
+// });
 
 app.get('/tweets', function (req, res) {
 
@@ -562,13 +612,15 @@ app.get('/search', function (req, res) {
  res.send('Not yet implement');
 });
 
-app.get('/profile', function (req, res) {
+// app.get('/profile', function (req, res) {
 
-    //calls the /tweets function, inputing the user name
-    //inputs: req.params.query
-     res.send('Not yet implement');
-});
+//     //calls the /tweets function, inputing the user name
+//     //inputs: req.params.query
+//      res.send('Not yet implement');
+// });
 
+
+// add by Billy
 app.get('/follow', function (req, res) {
         var username=req.query.followingusername;
           if(loginUser!=username) 
@@ -576,3 +628,18 @@ app.get('/follow', function (req, res) {
          res.redirect('/dashboard');    
 });
 
+// edit by Billy
+app.get('/profile', function (req, res) {
+      var content='';
+    for(var i=0;i<info.length;i++)
+       if(info[i].username==loginUser){
+        content+='User       '+info[i].username+'</br>';
+        content+='Password   ' + info[i].password+'</br>';
+        content+='hometown   ' + info[i].hometown+'</br>';
+        content+='Birthday   ' + info[i].birthday+'</br>';
+       }
+      content += '<form method="get" action="/dashboard">' +
+        '<input type="submit" value="Return to Dashboard"/>'
+        '</dashboard></br>'; 
+   res.send(content);
+  });

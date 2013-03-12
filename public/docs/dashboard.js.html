@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>dashboard.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "", thisFile = "home/ksan/cs326/TwitterLite//dashboard.js", defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container"><div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+      <tr>
+        <td class="docs">
+          <h1>dashboard.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1">&#182;</a>
+</div>
+
+        </td>
+        <td class="code highlight"><div class="highlight"><pre><span class="nx">exports</span><span class="p">.</span><span class="nx">dashboard</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">){</span>
+ <span class="kd">var</span> <span class="nx">users</span><span class="o">=</span><span class="p">[</span>
+      <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span><span class="nx">password</span><span class="o">:</span><span class="s1">&#39;b&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;alice&#39;</span><span class="p">,</span><span class="nx">password</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;jack&#39;</span><span class="p">,</span><span class="nx">password</span><span class="o">:</span><span class="s1">&#39;j&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;mick&#39;</span><span class="p">,</span><span class="nx">password</span><span class="o">:</span><span class="s1">&#39;m&#39;</span><span class="p">}</span> 
+      <span class="p">]</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2">&#182;</a>
+</div>
+<p>we can call addfollowers function to add more followers
+add by Billy</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="kd">var</span> <span class="nx">followers</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span><span class="nx">follower</span><span class="o">:</span><span class="s1">&#39;alice&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span><span class="nx">follower</span><span class="o">:</span><span class="s1">&#39;jack&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span><span class="nx">follower</span><span class="o">:</span><span class="s1">&#39;mick&#39;</span><span class="p">},</span>
+    <span class="p">]</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3">&#182;</a>
+</div>
+<p>we may add more tweet by enter text in broser 
+we need this function</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">var</span> <span class="nx">Tweet</span><span class="o">=</span><span class="p">[</span>
+      <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span>  <span class="nx">tweet</span><span class="o">:</span><span class="s2">&quot;How are you ?&quot;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;alice&#39;</span><span class="p">,</span><span class="nx">tweet</span><span class="o">:</span><span class="s2">&quot;What are you doing ?&quot;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;jack&#39;</span><span class="p">,</span> <span class="nx">tweet</span><span class="o">:</span><span class="s2">&quot;Are you going to party tonight?&quot;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;mick&#39;</span><span class="p">,</span> <span class="nx">tweet</span><span class="o">:</span><span class="s2">&quot;Are you going tonight?&quot;</span><span class="p">}</span>
+  <span class="p">]</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4">&#182;</a>
+</div>
+<p>we can add information to user profile</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+  <span class="kd">var</span> <span class="nx">info</span><span class="o">=</span><span class="p">[</span>
+         <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span><span class="nx">password</span><span class="o">:</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="nx">hometown</span><span class="o">:</span><span class="s1">&#39;China&#39;</span><span class="p">,</span><span class="nx">birthday</span><span class="o">:</span><span class="s1">&#39;12/12/1987&#39;</span><span class="p">},</span>
+          <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;alice&#39;</span><span class="p">,</span><span class="nx">password</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="nx">hometown</span><span class="o">:</span><span class="s1">&#39;U S&#39;</span><span class="p">,</span><span class="nx">birthday</span><span class="o">:</span><span class="s1">&#39;10/10/1991&#39;</span><span class="p">},</span>
+           <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;jack&#39;</span><span class="p">,</span><span class="nx">password</span><span class="o">:</span><span class="s1">&#39;j&#39;</span><span class="p">,</span><span class="nx">hometown</span><span class="o">:</span><span class="s1">&#39;China&#39;</span><span class="p">,</span><span class="nx">birthday</span><span class="o">:</span><span class="s1">&#39;12/12/1978&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">username</span><span class="o">:</span><span class="s1">&#39;mick&#39;</span><span class="p">,</span><span class="nx">password</span><span class="o">:</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="nx">hometown</span><span class="o">:</span><span class="s1">&#39;England&#39;</span><span class="p">,</span><span class="nx">birthday</span><span class="o">:</span><span class="s1">&#39;01/01/1990&#39;</span><span class="p">}</span>
+  <span class="p">]</span>
+
+
+   <span class="kd">var</span> <span class="nx">loginUser</span><span class="o">=</span><span class="kc">null</span><span class="p">;</span>
+
+
+
+  
+  <span class="kd">var</span> <span class="nx">content</span><span class="o">=</span><span class="s1">&#39;&lt;h1&gt; Welcome to User Dashboard &lt;/h1&gt;&#39;</span><span class="p">;</span>
+    <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39;User :&#39;</span><span class="o">+</span><span class="nx">loginUser</span><span class="o">+</span><span class="s1">&#39;&lt;/br&gt;&#39;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">followerlist</span><span class="o">=</span><span class="p">[{</span><span class="nx">username</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span><span class="nx">follower</span><span class="o">:</span><span class="kc">null</span><span class="p">}];</span>
+    <span class="kd">var</span> <span class="nx">followinglist</span><span class="o">=</span><span class="p">[{</span><span class="nx">username</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span><span class="nx">follower</span><span class="o">:</span><span class="kc">null</span><span class="p">}];</span>
+    <span class="kd">var</span> <span class="nx">usertweets</span><span class="o">=</span><span class="p">[{</span><span class="nx">username</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span><span class="nx">tweet</span><span class="o">:</span><span class="kc">null</span><span class="p">}];</span>
+    <span class="kd">var</span> <span class="nx">followerstweets</span><span class="o">=</span><span class="p">[{</span><span class="nx">username</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span><span class="nx">tweet</span><span class="o">:</span><span class="kc">null</span><span class="p">}];</span>
+    <span class="kd">var</span> <span class="nx">followingstweets</span><span class="o">=</span><span class="p">[{</span><span class="nx">username</span><span class="o">:</span><span class="kc">null</span><span class="p">,</span><span class="nx">tweet</span><span class="o">:</span><span class="kc">null</span><span class="p">}];</span>
+   
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5">&#182;</a>
+</div>
+<p>get followerlist</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">followers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+       <span class="k">if</span><span class="p">(</span><span class="nx">followers</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">!=</span><span class="kc">null</span><span class="p">)</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">followers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">==</span><span class="nx">loginUser</span><span class="p">)</span>
+        <span class="nx">followerlist</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">followers</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6">&#182;</a>
+</div>
+<p>for User Tweet History</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">Tweet</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">Tweet</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">==</span><span class="nx">loginUser</span><span class="p">)</span>
+        <span class="nx">usertweets</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">Tweet</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7">&#182;</a>
+</div>
+<p>for followerstweet History</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">followerlist</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">j</span><span class="o">&lt;</span><span class="nx">Tweet</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">j</span><span class="o">++</span><span class="p">)</span>
+           <span class="k">if</span><span class="p">(</span><span class="nx">followerlist</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">follower</span><span class="o">===</span><span class="nx">Tweet</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">username</span><span class="p">)</span>
+               <span class="nx">followerstweets</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">Tweet</span><span class="p">[</span><span class="nx">j</span><span class="p">]);</span>
+
+    
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8">&#182;</a>
+</div>
+<p>get the followingList</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">followers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">followers</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">!=</span><span class="kc">null</span><span class="p">)</span>
+      <span class="k">if</span><span class="p">(</span><span class="nx">followers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">follower</span><span class="o">==</span><span class="nx">loginUser</span><span class="p">)</span>
+        <span class="nx">followinglist</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">followers</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9">&#182;</a>
+</div>
+<p>for following list</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+     <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">followinglist</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">j</span><span class="o">&lt;</span><span class="nx">Tweet</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">j</span><span class="o">++</span><span class="p">)</span>
+           <span class="k">if</span><span class="p">(</span><span class="nx">followinglist</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">===</span><span class="nx">Tweet</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">username</span><span class="p">)</span>
+               <span class="nx">followingstweets</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">Tweet</span><span class="p">[</span><span class="nx">j</span><span class="p">]);</span>
+
+
+
+ 
+      <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39;&lt;h2&gt; User Tweet History &lt;/h2&gt; &lt;/br&gt;&#39;</span><span class="p">;</span>
+       <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">usertweets</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">usertweets</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">!=</span><span class="kc">null</span><span class="p">)</span>
+        <span class="nx">content</span><span class="o">+=</span><span class="nx">usertweets</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">tweet</span><span class="o">+</span><span class="s1">&#39;&lt;/br&gt;&#39;</span><span class="p">;</span>
+
+      <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39;&lt;h2&gt; Followers List &lt;/h2&gt; &lt;/br&gt;&#39;</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">followerlist</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+          <span class="k">if</span><span class="p">(</span><span class="nx">followerlist</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">!=</span><span class="kc">null</span><span class="p">)</span>
+            <span class="nx">content</span><span class="o">+=</span><span class="nx">followerlist</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">follower</span><span class="o">+</span><span class="s1">&#39;&lt;/br&gt;&#39;</span><span class="p">;</span>
+
+      <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39;&lt;h2&gt; Followers Tweets History&lt;/h2&gt; &lt;/br&gt;&#39;</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">followerstweets</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+          <span class="k">if</span><span class="p">(</span><span class="nx">followerstweets</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">!=</span><span class="kc">null</span><span class="p">)</span>
+            <span class="nx">content</span><span class="o">+=</span><span class="nx">followerstweets</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">+</span><span class="s1">&#39;    :    &#39;</span><span class="o">+</span><span class="nx">followerstweets</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">tweet</span><span class="o">+</span><span class="s1">&#39;&lt;/br&gt;&#39;</span><span class="p">;</span>
+
+       <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39;&lt;h2&gt; Following List &lt;/h2&gt; &lt;/br&gt;&#39;</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">followinglist</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+          <span class="k">if</span><span class="p">(</span><span class="nx">followinglist</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">!=</span><span class="kc">null</span><span class="p">)</span>
+            <span class="nx">content</span><span class="o">+=</span><span class="nx">followinglist</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">+</span><span class="s1">&#39;&lt;/br&gt;&#39;</span><span class="p">;</span> 
+
+       <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39;&lt;h2&gt; Followings Tweets History&lt;/h2&gt; &lt;/br&gt;&#39;</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">followingstweets</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="nx">content</span><span class="o">+=</span><span class="nx">followingstweets</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">username</span><span class="o">+</span><span class="s1">&#39;  :     &#39;</span><span class="o">+</span><span class="nx">followingstweets</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">tweet</span><span class="o">+</span><span class="s1">&#39; &lt;/br&gt;&#39;</span><span class="p">;</span>
+             
+
+            <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39;&lt;/br&gt;&#39;</span><span class="p">;</span>
+            <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39;&lt;/br&gt;&#39;</span><span class="p">;</span>
+            <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39;&lt;/br&gt;&#39;</span><span class="p">;</span>
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10">&#182;</a>
+</div>
+<p>content+=' Please make a decision of what you want to do </br>';
+content+=' 1 for Tweet a message </br>';
+content+=' 2 for follow a friend </br>';
+content+=' 3 for unfollow a friend </br>';
+content+=' 4 for go into user profile </br>';
+content+=' 5 for logout </br>';</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+       <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39; Here is a series of cammand you can use in this app &lt;/br&gt;&#39;</span><span class="p">;</span>
+       <span class="nx">content</span><span class="o">+=</span><span class="s1">&#39; /logout          logging out the user &lt;/br&gt;&#39;</span><span class="p">;</span>
+       <span class="nx">content</span><span class="o">+=</span> <span class="p">(</span><span class="s1">&#39;/tweetMessage   TweetMessage.TweetMessage &lt;/br&gt;&#39;</span><span class="p">);</span>
+
+
+
+
+
+
+</pre></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="docs">
+<div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11">&#182;</a>
+</div>
+<p>content += '<form method="get" action="/dashboardhandler">' +
+ 'Decision: <input type="text" name="decision"/><br/>' +
+ '<input type="submit" value="Enter"/>'
+ '</dashboardhandler></br>';</p>
+        </td>
+        <td class="code highlight"><div class="highlight"><pre>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span> 
+<span class="p">}</span>
+</pre></div>
+        </td>
+      </tr>
+  </tbody>
+</table>
+  </div>
+</body>
+</html>
