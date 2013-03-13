@@ -1,7 +1,9 @@
-//var user = require('../lib/user');
+
+var user = require('../lib/user');
 
 exports.login = function(req, res){
-  var user = require('../lib/user');
+  
+
     var content='';
      
      // if(loginCount!=0)

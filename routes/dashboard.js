@@ -38,6 +38,8 @@ exports.dashboard = function(req, res){
 
 	
 	var content='<h1> Welcome to User Dashboard </h1>';
+
+  
     content+='User :'+loginUser+'</br>';
     var followerlist=[{username:null,follower:null}];
     var followinglist=[{username:null,follower:null}];
@@ -107,6 +109,7 @@ exports.dashboard = function(req, res){
             content+='</br>';
             content+='</br>';
             content+='</br>';
+
        content+=' Please make a decision of what you want to do </br>';
        content+=' 1 for Tweet a message </br>';
        content+=' 2 for follow a friend </br>';
@@ -116,6 +119,7 @@ exports.dashboard = function(req, res){
        // content+=' Here is a series of cammand you can use in this app </br>';
        // content+=' /logout          logging out the user </br>';
        // content+= ('/tweetMessage   TweetMessage.TweetMessage </br>');
+
 
 
 

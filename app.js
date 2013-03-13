@@ -361,11 +361,16 @@ var loginCount=0;
   app.get ('/loginverify' , verify.loginverify);
   app.get ('/logout' , logout.logout);
   app.get ('/dashboard' , dashboard.dashboard);
+<<<<<<< HEAD
   app.get ('/dashboardhandler' , dashboardhandler.dashboardhandler);
   app.get ('/TweetMessage' , TweetMessage.TweetMessage);
   app.get('/TweetMessageHandler' ,TweetMessageHandler.TweetMessageHandler);
   app.get('/profile',  profile.profile );
   app.get('/follow',  follow.follow );
+=======
+  app.get ('/dahsboardhandler' , dahsboardhandler.dahsboardhandler);
+  app.get ('/tweetMessage' , TweetMessage.TweetMessage);
+>>>>>>> 20be95854cb430b24f53d41d2a7a89183a63fda6
 //logout fuction
 // app.get('/logout',function(req,res){
 //    loginUser=null;
@@ -383,6 +388,16 @@ var loginCount=0;
 //       console.log(Tweet[i].tweet);
 //      res.redirect('/dashboard');
 // });
+
+app.get('/TweetMessage', function (req, res) {
+   var message=req.query.Message;
+  var c ={username:loginUser,tweet:message};
+     Tweet.push(c);
+     for(var i=0;i<Tweet.length;i++)
+      console.log(Tweet[i].tweet);
+     res.redirect('/dashboard');
+});
+
 
 
 // update the tweet 
@@ -649,3 +664,30 @@ app.get('/search', function (req, res) {
 //         '</dashboard></br>'; 
 //    res.send(content);
 //   });
+
+
+// add by Billy
+/*app.get('/follow', function (req, res) {
+        var username=req.query.followingusername;
+          if(loginUser!=username) 
+         followers.push({username:username,follower:loginUser});
+         res.redirect('/dashboard');    
+});
+
+// edit by Billy
+app.get('/profile', function (req, res) {
+      var content='';
+    for(var i=0;i<info.length;i++)
+       if(info[i].username==loginUser){
+        content+='User       '+info[i].username+'</br>';
+        content+='Password   ' + info[i].password+'</br>';
+        content+='hometown   ' + info[i].hometown+'</br>';
+        content+='Birthday   ' + info[i].birthday+'</br>';
+       }
+      content += '<form method="get" action="/dashboard">' +
+        '<input type="submit" value="Return to Dashboard"/>'
+        '</dashboard></br>'; 
+   res.send(content);
+  });
+
+*/

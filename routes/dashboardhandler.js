@@ -1,6 +1,7 @@
 
 exports.dashboardhandler= function(req, res){
 	var content='';
+
    var choice=req.query.decision;
     if(choice ==1)
     {

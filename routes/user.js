@@ -4,6 +4,7 @@ var user = require('../lib/user');
 var userids = 0;
 // A logged in "database":
 var online = {};
+=======
 
 //
 // The `flash` function is used to pass a message between
@@ -147,4 +148,4 @@ exports.online = function(req, res) {
   res.render('online', { title : 'Users Online',
                          users : online });
 };
-
+>>>>>>> 20be95854cb430b24f53d41d2a7a89183a63fda6
