@@ -1,15 +1,9 @@
 
 var Users = require('../lib/user');
-
+users=Users.users;
 
 
 exports.loginverify = function(req, res){
-  var users=[
-      {username:'bob',password:'b'},
-      {username:'alice',password:'a'},
-      {username:'jack',password:'j'},
-      {username:'mick',password:'m'} 
-      ]
 
  var user=req.query.username;
         var password=req.query.password;
@@ -27,4 +21,4 @@ exports.loginverify = function(req, res){
 
 }
 
-}
+

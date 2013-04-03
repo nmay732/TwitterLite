@@ -1,42 +1,11 @@
+var lib=require('../lib');
+ var users=lib.users;
+ var followers=lib.followers;
+ var Tweet=lib.Tweet;
+ 
 exports.dashboard = function(req, res){
- var users=[
-      {username:'bob',password:'b'},
-      {username:'alice',password:'a'},
-      {username:'jack',password:'j'},
-      {username:'mick',password:'m'} 
-      ]
-
-    // we can call addfollowers function to add more followers
-    // add by Billy
-    var followers=[
-    {username:'bob',follower:'alice'},
-    {username:'bob',follower:'jack'},
-    {username:'bob',follower:'mick'},
-    ]
-
-// we may add more tweet by enter text in broser 
-// we need this function
-  var Tweet=[
-      {username:'bob',  tweet:"How are you ?"},
-      {username:'alice',tweet:"What are you doing ?"},
-      {username:'jack', tweet:"Are you going to party tonight?"},
-      {username:'mick', tweet:"Are you going tonight?"}
-  ]
-
-  // we can add information to user profile
-  var info=[
-         {username:'bob',password:'b',hometown:'China',birthday:'12/12/1987'},
-          {username:'alice',password:'a',hometown:'U S',birthday:'10/10/1991'},
-           {username:'jack',password:'j',hometown:'China',birthday:'12/12/1978'},
-            {username:'mick',password:'m',hometown:'England',birthday:'01/01/1990'}
-  ]
-
-
    var loginUser=null;
 
-
-
-	
 	var content='<h1> Welcome to User Dashboard </h1>';
 
   
@@ -116,14 +85,7 @@ exports.dashboard = function(req, res){
        content+=' 3 for unfollow a friend </br>';
        content+=' 4 for go into user profile </br>';
        content+=' 5 for logout </br>';
-       // content+=' Here is a series of cammand you can use in this app </br>';
-       // content+=' /logout          logging out the user </br>';
-       // content+= ('/tweetMessage   TweetMessage.TweetMessage </br>');
-
-
-
-
-
+  
 
        content += '<form method="get" action="/dashboardhandler">' +
         'Decision: <input type="text" name="decision"/><br/>' +
