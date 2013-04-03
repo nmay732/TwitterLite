@@ -1,8 +1,4 @@
 
-var Users = require('../lib/user');
-
-
-
 exports.loginverify = function(req, res){
     var users=[
       {username:'bob',password:'b'},
@@ -17,11 +13,21 @@ exports.loginverify = function(req, res){
         if(users[i].username===user)
             if(users[i].password===password){
               loginUser=user;
-              console.log("Login Success");
+              console.log("Login Success for username " + user);
+              //TODO: Set cookie here?
+              res.cookie('session_id', getCookieVal(), { maxAge: 900000, httpOnly: true });
               res.redirect('/dashboard');
+            }else{
+                //TODO: send message: flash(req, res, 'auth', error);
+                res.redirect('/login'); 
             }
-             // loginCount++;
-              res.redirect('/login');
     }
+
+}
+
+getCookieVal = function(){
+    
+    //TODO: store a list of all the session ids somewhere...
+    return "12345";
 
 }

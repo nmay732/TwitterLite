@@ -1,0 +1,36 @@
+<h1> Welcome to User Dashboard </h1>
+
+  
+User: <%= user %></br>
+ 
+<h2> User Tweet History </h2> </br>
+
+<h2> Followers List </h2> </br>
+<ul>
+    <% for (var i=0; i < followers.length; i++) { %>
+        <li><%= followers[i].follower %></li>
+    <% } %>
+</ul>
+
+<h2> Followers Tweets History</h2> </br>
+<ul>
+    <% for (var i=0; i < tweets.length; i++) { %>
+        <li><%= tweets[i].username %>: <%= tweets[i].text %></li>
+    <% } %>
+</ul>
+<h2> Following List </h2> </br>
+
+<h2> Followings Tweets History</h2> </br>
+       
+
+Please make a decision of what you want to do </br>
+1 for Tweet a message </br>
+2 for follow a friend </br>
+3 for unfollow a friend </br>
+4 for go into user profile </br>
+5 for logout </br>
+
+<form method="get" action="/dashboardhandler">
+Decision: <input type="text" name="decision"/><br/>
+<input type="submit" value="Enter"/>
+</dashboardhandler></br>
