@@ -1,4 +1,8 @@
+
 exports.dashboard = function(req, res){
+
+login_handler = require('./login-handler');
+
 var users=[
       {username:'bob',password:'b'},
       {username:'alice',password:'a'},

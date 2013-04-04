@@ -17,10 +17,3 @@ exports.loginverify = function(req, res){
         }
     });
 }
-
-getCookieVal = function(){
-    
-    //TODO: store a list of all the session ids somewhere...
-    return "12345";
-
-}

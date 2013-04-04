@@ -6,8 +6,8 @@
 var express = require('express')
   , routes = require('./routes')
   , login_handler = require('./routes/login-handler')
-  , index = require('./routes/index')
   , verify = require('./routes/loginverify')
+  , index = require('./routes/index')
   , dashboard=require('./routes/dashboard')
   , dashboardhandler=require('./routes/dashboardhandler')
   , TweetMessage = require('./routes/TweetMessage')
@@ -29,7 +29,7 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.cookieParser('cookies monster'));
+  app.use(express.cookieParser('cookies monster')); //needs to come before app.router
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -45,7 +45,7 @@ http.createServer(app).listen(app.get('port'), function(){
 //edit by Billy
 var loginCount=0;
 app.get('/',function(req,res){res.redirect('/login');}); //redirect
-app.get ('/index' , index.index);
+app.get ('/index' , index.index); //testing purposes only. not necessary for app
 app.get ('/login' , login_handler.login);
 app.get ('/loginverify' , verify.loginverify);
 app.get ('/logout' , login_handler.logout);
@@ -57,25 +57,6 @@ app.get ('/profile',  profile.profile );
 app.get ('/follow',  follow.follow );
 app.get ('/dashboardhandler' , dashboardhandler.dashboardhandler);
 app.get ('/tweetMessage' , TweetMessage.TweetMessage);
-
-
-//logout fuction
-// app.get('/logout',function(req,res){
-//    loginUser=null;
-//    res.redirect('/login');
-// });
-
-
-// we need a way to add tweet
-// add by Billy
-// app.get('/TweetMessage', function (req, res) {
-//    var message=req.query.Message;
-//   var c ={username:loginUser,tweet:message};
-//      Tweet.push(c);
-//      for(var i=0;i<Tweet.length;i++)
-//       console.log(Tweet[i].tweet);
-//      res.redirect('/dashboard');
-// });
 
 app.get('/TweetMessage', function (req, res) {
    var message=req.query.Message;
