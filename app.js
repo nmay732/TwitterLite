@@ -5,7 +5,7 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , login = require('./routes/login')
+  , login_handler = require('./routes/login-handler')
   , index = require('./routes/index')
   , verify = require('./routes/loginverify')
   , dashboard=require('./routes/dashboard')
@@ -14,7 +14,6 @@ var express = require('express')
   , TweetMessageHandler = require('./routes/TweetMessageHandler')
   , profile = require('./routes/profile')
   , follow = require('./routes/follow')
-  , logout = require('./routes/logout')
   , http = require('http')
   , path = require('path')
   , fs = require('fs');
@@ -30,63 +29,26 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.cookieParser('cookies monster'));
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
-  app.use(express.cookieParser()); //cookies
 });
 
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-
-
-
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-//  FAKE DATA LAYER  //
-
-var users=[
-    {username:'bob',password:'b'},
-    {username:'alice',password:'a'},
-    {username:'jack',password:'j'},
-    {username:'mick',password:'m'} 
-    ]
-
-var followers=[
-    {username:'bob',follower:'alice'},
-    {username:'bob',follower:'jack'},
-    {username:'bob',follower:'mick'},
-    ]
-
-var Tweet=[
-    {username:'bob',  tweet:"How are you ?"},
-    {username:'alice',tweet:"What are you doing ?"},
-    {username:'jack', tweet:"Are you going to party tonight?"},
-    {username:'mick', tweet:"Are you going tonight?"}
-    ]
-
-var info=[
-    {username:'bob',password:'b',hometown:'China',birthday:'12/12/1987'},
-    {username:'alice',password:'a',hometown:'U S',birthday:'10/10/1991'},
-    {username:'jack',password:'j',hometown:'China',birthday:'12/12/1978'},
-    {username:'mick',password:'m',hometown:'England',birthday:'01/01/1990'}
-    ]
-
-var loginUser=null;
-  
-// add by Billy
-
-//Login function
 //edit by Billy
 var loginCount=0;
 app.get('/',function(req,res){res.redirect('/login');}); //redirect
 app.get ('/index' , index.index);
-app.get ('/login' , login.login);
+app.get ('/login' , login_handler.login);
 app.get ('/loginverify' , verify.loginverify);
-app.get ('/logout' , logout.logout);
+app.get ('/logout' , login_handler.logout);
 app.get ('/dashboard' , dashboard.dashboard);
 app.get ('/dashboardhandler' , dashboardhandler.dashboardhandler);
 app.get ('/TweetMessage' , TweetMessage.TweetMessage);
