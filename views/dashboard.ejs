@@ -1,14 +1,34 @@
 <h1> Welcome to User Dashboard </h1>
 
   
-User: <%= user %></br>
- 
-<h2> User Tweet History </h2> </br>
+<h1> User: <%= user %> </h1>
 
-<h2> Followers List </h2> </br>
+<h2> Timeline </h2>
+<ul>
+    <% for (var i=0; i < tweets.length; i++) { %>
+        <% for (var j=0; j < followers.length; j++) { %>
+            <% if(tweets[i].username == followers[j].username && followers[j].follower == user){ %>
+                <li><%= tweets[i].username %>: <%= tweets[i].text %></li>
+            <% } %>
+        <% } %>
+    <% } %>
+</ul>
+ 
+<h2> <%= user %>'s Tweets </h2>
+<ul>
+    <% for (var i=0; i < tweets.length; i++) { %>
+        <% if(tweets[i].username == user){ %>
+            <li><%= tweets[i].username %>: <%= tweets[i].text %></li>
+        <% } %>
+    <% } %>
+</ul>
+
+<h2> Followers List </h2>
 <ul>
     <% for (var i=0; i < followers.length; i++) { %>
-        <li><%= followers[i].follower %></li>
+        <% if(followers[i].username == user){ %>
+            <li><%= followers[i].follower %></li>
+        <% } %>
     <% } %>
 </ul>
 
@@ -18,9 +38,15 @@ User: <%= user %></br>
         <li><%= tweets[i].username %>: <%= tweets[i].text %></li>
     <% } %>
 </ul>
-<h2> Following List </h2> </br>
 
-<h2> Followings Tweets History</h2> </br>
+<h2> Following List </h2>
+<ul>
+    <% for (var i=0; i < followers.length; i++) { %>
+        <% if(followers[i].follower == user){ %>
+            <li><%= followers[i].username %></li>
+        <% } %>
+    <% } %>
+</ul>
        
 
 Please make a decision of what you want to do </br>
