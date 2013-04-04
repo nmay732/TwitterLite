@@ -5,15 +5,15 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , login = require('./routes/login')
+  , login_handler = require('./routes/login-handler')
   , verify = require('./routes/loginverify')
+  , index = require('./routes/index')
   , dashboard=require('./routes/dashboard')
   , dashboardhandler=require('./routes/dashboardhandler')
   , TweetMessage = require('./routes/TweetMessage')
   , TweetMessageHandler = require('./routes/TweetMessageHandler')
   , profile = require('./routes/profile')
   , follow = require('./routes/follow')
-  , logout = require('./routes/logout')
   , http = require('http')
   , path = require('path')
   , fs = require('fs');
@@ -29,6 +29,7 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.cookieParser('cookies monster')); //needs to come before app.router
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -39,63 +40,13 @@ app.configure('development', function(){
 
 
 
-
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-//<<<<<<< HEAD
-
-
-
-
-//   I add this variable for public acess, not just Login function
-//   may add more information inside as we intergrade it
-//   adit by Billy
-  var users=[
-      {username:'bob',password:'b'},
-      {username:'alice',password:'a'},
-      {username:'jack',password:'j'},
-      {username:'mick',password:'m'} 
-      ]
-
-    // we can call addfollowers function to add more followers
-    // add by Billy
-    var followers=[
-    {username:'bob',follower:'alice'},
-    {username:'bob',follower:'jack'},
-    {username:'bob',follower:'mick'},
-    ]
-
-// we may add more tweet by enter text in broser 
-// we need this function
-  var Tweet=[
-      {username:'bob',  tweet:"How are you ?"},
-      {username:'alice',tweet:"What are you doing ?"},
-      {username:'jack', tweet:"Are you going to party tonight?"},
-      {username:'mick', tweet:"Are you going tonight?"}
-  ]
-
-  // we can add information to user profile
-  var info=[
-         {username:'bob',password:'b',hometown:'China',birthday:'12/12/1987'},
-          {username:'alice',password:'a',hometown:'U S',birthday:'10/10/1991'},
-           {username:'jack',password:'j',hometown:'China',birthday:'12/12/1978'},
-            {username:'mick',password:'m',hometown:'England',birthday:'01/01/1990'}
-  ]
-
-
-   var loginUser=null;
-
-  
-// add by Billy
-app.get('/',function(req,res){
-       res.redirect('/login');
-});
-//=======
-//Login function
 //edit by Billy
 var loginCount=0;
+
  //app.get('/login',function(req,res)
   app.get ('/login' , login.login);
   app.get ('/loginverify' , verify.loginverify);
@@ -128,6 +79,20 @@ var loginCount=0;
 //       console.log(Tweet[i].tweet);
 //      res.redirect('/dashboard');
 // });
+
+app.get('/',function(req,res){res.redirect('/login');}); //redirect
+app.get ('/index' , index.index); //testing purposes only. not necessary for app
+app.get ('/login' , login_handler.login);
+app.get ('/loginverify' , verify.loginverify);
+app.get ('/logout' , login_handler.logout);
+app.get ('/dashboard' , dashboard.dashboard);
+app.get ('/dashboardhandler' , dashboardhandler.dashboardhandler);
+app.get ('/TweetMessage' , TweetMessage.TweetMessage);
+app.get ('/TweetMessageHandler' ,TweetMessageHandler.TweetMessageHandler);
+app.get ('/profile',  profile.profile );
+app.get ('/follow',  follow.follow );
+app.get ('/dashboardhandler' , dashboardhandler.dashboardhandler);
+app.get ('/tweetMessage' , TweetMessage.TweetMessage);
 
 app.get('/TweetMessage', function (req, res) {
    var message=req.query.Message;
