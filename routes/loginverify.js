@@ -1,28 +1,21 @@
+users = require('../lib/user/user.js');
 
 exports.loginverify = function(req, res){
-    var users=[
-      {username:'bob',password:'b'},
-      {username:'alice',password:'a'},
-      {username:'jack',password:'j'},
-      {username:'mick',password:'m'} 
-      ]
-
     var user=req.query.username;
     var password=req.query.password;
-    for (var i=0;i<users.length;i++){
-        if(users[i].username===user)
-            if(users[i].password===password){
-              loginUser=user;
-              console.log("Login Success for username " + user);
-              //TODO: Set cookie here?
-              res.cookie('session_id', getCookieVal(), { maxAge: 900000, httpOnly: true });
-              res.redirect('/dashboard');
-            }else{
-                //TODO: send message: flash(req, res, 'auth', error);
-                res.redirect('/login'); 
-            }
-    }
-
+    var auth = users.lookup(user, password, function(err, obj){
+        if(err != undefined){
+            console.log('failed login attempt')
+            //TODO: Set flash to notify login page there was a failed attempt
+            res.redirect('/login'); 
+        }
+        else{
+            console.log("Login Success for username " + user);
+            //TODO: Set cookie here?
+            //res.cookie('session_id', getCookieVal(), { maxAge: 900000, httpOnly: true });
+            res.redirect('/dashboard');
+        }
+    });
 }
 
 getCookieVal = function(){
